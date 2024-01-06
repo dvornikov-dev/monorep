@@ -1,0 +1,53 @@
+{
+  "name": "course-marketplace",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/course-marketplace/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/course-marketplace",
+        "main": "apps/course-marketplace/src/main.ts",
+        "tsConfig": "apps/course-marketplace/tsconfig.app.json",
+        "assets": ["apps/course-marketplace/src/assets"],
+        "webpackConfig": "apps/course-marketplace/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "course-marketplace:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "course-marketplace:build:development"
+        },
+        "production": {
+          "buildTarget": "course-marketplace:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/course-marketplace/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
